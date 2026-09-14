@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 16: Computing Research Project Proposal</title>
+    <style>
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #F0F4F8;
+            --text-color: #333333;
+            --border-color: #CCCCCC;
+            --highlight-color: #E20030;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F9FAFB;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--highlight-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 10px 0 0 0;
+            font-weight: 300;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .info-card {
+            background-color: white;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        .info-card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .deadline {
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #004070;
+        }
+
+        #output-container {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        #generated-proposal {
+            width: 100%;
+            min-height: 400px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .copy-btn {
+            background-color: #28a745;
+            margin-bottom: 10px;
+            width: auto;
+        }
+
+        .copy-btn:hover {
+            background-color: #218838;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Research Project Proposal Builder</h1>
+        <p>Kings Cornerstone International College | Centre 93219</p>
+        <p>Unit 16: Computing Research Project</p>
+    </header>
+
+    <div class="container">
+        <div class="info-card">
+            <h2>Pearson-set Theme: Human-Centred Computing for Accessible, Adaptive, and Connected Digital Experiences</h2>
+            <p>This academic year focuses on the design, development, and evaluation of digital systems that prioritise the needs, accessibility, safety, and experiences of users. As a digital designer, developer, or technology specialist, your project must explore concepts like accessibility standards, human-computer interaction, IoT systems, cloud-connected applications, or reliability engineering.</p>
+            <div class="deadline">Due: Tuesday, 8 September 2026, 12:00 AM</div>
+        </div>
+
+        <div class="form-section">
+            <form id="proposalForm">
+                
+                <div class="form-group">
+                    <label for="topic">1. Topic</label>
+                    <span class="help-text">Select one of the suggested research areas or choose "Other" to define your own.</span>
+                    <select id="topic" required onchange="checkCustomTopic()">
+                        <option value="" disabled selected>Select a theme...</option>
+                        <option value="Human-centred IoT systems for accessibility and reliability">Human-centred IoT systems for accessibility and reliability</option>
+                        <option value="Error prevention strategies in intelligent digital systems">Error prevention strategies in intelligent digital systems</option>
+                        <option value="Privacy, ethics, and trust in connected smart technologies">Privacy, ethics, and trust in connected smart technologies</option>
+                        <option value="Inclusive interfaces for diverse user groups">Inclusive interfaces for diverse user groups</option>
+                        <option value="Human interaction with AI-driven IoT devices">Human interaction with AI-driven IoT devices</option>
+                        <option value="Fault-tolerant interfaces for IoT and smart environments">Fault-tolerant interfaces for IoT and smart environments</option>
+                        <option value="Reliability engineering in networked user systems">Reliability engineering in networked user systems</option>
+                        <option value="Adaptive interfaces for error prevention in smart technologies">Adaptive interfaces for error prevention in smart technologies</option>
+                        <option value="Human-centred monitoring systems for connected devices">Human-centred monitoring systems for connected devices</option>
+                        <option value="The availability and reliability of cloud-based applications">The availability and reliability of cloud-based applications</option>
+                        <option value="Other">Other (Specify below)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="custom-topic-group" style="display: none;">
+                    <label for="customTopic">Custom Topic</label>
+                    <input type="text" id="customTopic" placeholder="Enter your specific research topic">
+                </div>
+
+                <div class="form-group">
+                    <label for="aim">2. Aim</label>
+                    <span class="help-text">State the overall overarching purpose of your research project in one or two sentences.</span>
+                    <textarea id="aim" required placeholder="The aim of this research is to..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="objectives">3. Objectives</label>
+                    <span class="help-text">List 3 to 4 specific, measurable actions you will take to achieve your aim.</span>
+                    <textarea id="objectives" required placeholder="- To evaluate...&#10;- To design...&#10;- To test..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchQuestions">4. Research Questions</label>
+                    <span class="help-text">Formulate 1 to 3 key questions your project will attempt to answer.</span>
+                    <textarea id="researchQuestions" required placeholder="1. How does...&#10;2. What is the impact of..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="methodology">5. Methodology</label>
+                    <span class="help-text">Outline how you will conduct your research (e.g., primary data collection, secondary literature review, prototyping, user testing).</span>
+                    <textarea id="methodology" required placeholder="This project will utilize a mixed-methods approach, combining secondary research of WCAG guidelines with primary usability testing..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="resources">6. Resources and timeline</label>
+                    <span class="help-text">Detail the hardware, software, literature, or participants you need, along with a brief project schedule.</span>
+                    <textarea id="resources" required placeholder="Resources required include access to IEEE Xplore, usability testing software, and 10 volunteer participants. The timeline is as follows: Week 1-2 (Literature Review)..."></textarea>
+                </div>
+
+                <button type="button" onclick="generateProposal()">Compile Proposal</button>
+            </form>
+        </div>
+
+        <div id="output-container" class="form-section">
+            <h2>Your Compiled Proposal</h2>
+            <p>Review your work below. You can copy this text directly into your LMS submission text box.</p>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            <div id="generated-proposal"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Developed for Higher National Computing Curriculum Delivery.</p>
+    </footer>
+
+    <script>
+        function checkCustomTopic() {
+            const topicSelect = document.getElementById('topic');
+            const customGroup = document.getElementById('custom-topic-group');
+            if (topicSelect.value === 'Other') {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+        }
+
+        function generateProposal() {
+            // Get form values
+            const topicSelect = document.getElementById('topic').value;
+            const customTopic = document.getElementById('customTopic').value;
+            const finalTopic = topicSelect === 'Other' ? customTopic : topicSelect;
+            
+            const aim = document.getElementById('aim').value;
+            const objectives = document.getElementById('objectives').value;
+            const questions = document.getElementById('researchQuestions').value;
+            const methodology = document.getElementById('methodology').value;
+            const resources = document.getElementById('resources').value;
+
+            // Basic validation
+            if (!topicSelect || !aim || !objectives || !questions || !methodology || !resources) {
+                alert('Please fill out all fields before compiling your proposal.');
+                return;
+            }
+
+            // Format output
+            const outputText = `Unit 16: Research Project Proposal\n==================================\n\n` +
+                `1. Topic\n--------\n${finalTopic}\n\n` +
+                `2. Aim\n------\n${aim}\n\n` +
+                `3. Objectives\n-------------\n${objectives}\n\n` +
+                `4. Research Questions\n---------------------\n${questions}\n\n` +
+                `5. Methodology\n--------------\n${methodology}\n\n` +
+                `6. Resources and timeline\n-------------------------\n${resources}`;
+
+            // Display output
+            const outputContainer = document.getElementById('output-container');
+            const displayArea = document.getElementById('generated-proposal');
+            
+            displayArea.textContent = outputText;
+            outputContainer.style.display = 'block';
+            
+            // Scroll to output
+            outputContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('generated-proposal').textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Proposal copied to clipboard! You can now paste it into the submission box.');
+            }).catch(err => {
+                alert('Failed to copy text. Please select the text and copy manually.');
+            });
+        }
+    </script>
+</body>
+</html>
