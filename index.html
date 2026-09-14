@@ -3,319 +3,577 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit 16: Computing Research Project Proposal</title>
+    <title>Unit 16: Research Project Wizard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #005A9C;
-            --secondary-color: #F0F4F8;
-            --text-color: #333333;
-            --border-color: #CCCCCC;
-            --highlight-color: #E20030;
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary: #10B981;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --gray: #94A3B8;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #F9FAFB;
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Hero Header */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(rgba(30, 41, 59, 0.8), rgba(30, 41, 59, 0.9)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') center/cover;
             color: white;
-            padding: 2rem 1rem;
+            padding: 3rem 2rem;
             text-align: center;
-            border-bottom: 5px solid var(--highlight-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
         header p {
-            margin: 10px 0 0 0;
-            font-weight: 300;
             font-size: 1.1rem;
             opacity: 0.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .info-card {
-            background-color: white;
-            border-left: 5px solid var(--primary-color);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-radius: 4px;
-        }
-
-        .info-card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.3rem;
-        }
-
-        .deadline {
-            display: inline-block;
-            background-color: var(--highlight-color);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.9rem;
             margin-top: 10px;
         }
 
-        .form-section {
-            background-color: white;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-radius: 4px;
-            margin-bottom: 2rem;
+        .deadline-badge {
+            display: inline-block;
+            background: #EF4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            animation: pulse 2s infinite;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Wizard Container */
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 40px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Glassmorphism Panels */
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: #E2E8F0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 16.66%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Form Steps */
+        .step {
+            display: none;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .step h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
         }
 
         label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: var(--primary-color);
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--dark);
         }
 
-        .help-text {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        select, input[type="text"], textarea {
+        select, textarea, input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-family: inherit;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             box-sizing: border-box;
+            transition: all 0.3s;
+            background: #F8FAFC;
+        }
+
+        select:focus, textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
 
         textarea {
+            min-height: 150px;
             resize: vertical;
-            min-height: 100px;
         }
 
-        select:focus, input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
         }
 
         button {
-            background-color: var(--primary-color);
-            color: white;
+            padding: 12px 25px;
             border: none;
-            padding: 12px 24px;
-            font-size: 1.1rem;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            font-weight: bold;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
         }
 
-        button:hover {
-            background-color: #004070;
+        .btn-prev {
+            background: #E2E8F0;
+            color: var(--dark);
         }
 
-        #output-container {
+        .btn-prev:hover {
+            background: #CBD5E1;
+        }
+
+        .btn-next, .btn-submit {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-next:hover, .btn-submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Info Panel (Right Side) */
+        .info-panel {
+            background: var(--dark);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-content {
             display: none;
-            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
         }
 
-        #generated-proposal {
+        .info-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .info-panel img {
             width: 100%;
-            min-height: 400px;
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .info-panel h3 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        .info-panel p, .info-panel ul {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #CBD5E1;
+        }
+
+        /* Final Output */
+        #output-area {
+            background: #1E293B;
+            color: #10B981;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
             white-space: pre-wrap;
-            box-sizing: border-box;
-            border-radius: 4px;
+            margin-top: 20px;
+            border: 1px solid #334155;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .copy-btn {
-            background-color: #28a745;
-            margin-bottom: 10px;
-            width: auto;
+            width: 100%;
+            background: var(--secondary);
+            color: white;
+            margin-top: 15px;
+            font-size: 1.1rem;
         }
 
         .copy-btn:hover {
-            background-color: #218838;
+            background: #059669;
         }
-        
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #777;
-            font-size: 0.9rem;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .info-panel {
+                order: -1;
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Research Project Proposal Builder</h1>
+        <h1>Interactive Proposal Builder</h1>
         <p>Kings Cornerstone International College | Centre 93219</p>
-        <p>Unit 16: Computing Research Project</p>
+        <div class="deadline-badge">Due: Tuesday, 8 September 2026, 12:00 AM</div>
     </header>
 
     <div class="container">
-        <div class="info-card">
-            <h2>Pearson-set Theme: Human-Centred Computing for Accessible, Adaptive, and Connected Digital Experiences</h2>
-            <p>This academic year focuses on the design, development, and evaluation of digital systems that prioritise the needs, accessibility, safety, and experiences of users. As a digital designer, developer, or technology specialist, your project must explore concepts like accessibility standards, human-computer interaction, IoT systems, cloud-connected applications, or reliability engineering.</p>
-            <div class="deadline">Due: Tuesday, 8 September 2026, 12:00 AM</div>
-        </div>
+        <!-- Main Form Area -->
+        <div class="panel form-panel">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
 
-        <div class="form-section">
-            <form id="proposalForm">
+            <!-- Step 1: Topic -->
+            <div class="step active" id="step1">
+                <h2><span class="step-number">1</span> Topic Selection</h2>
+                <p>Select a topic aligned with the theme: <strong>Human-Centred Computing for Accessible, Adaptive, and Connected Digital Experiences</strong>.</p>
+                <label for="topic">Research Area</label>
+                <select id="topic" onchange="checkCustomTopic()">
+                    <option value="" disabled selected>Choose from Pearson themes...</option>
+                    <option value="Human-centred IoT systems for accessibility and reliability">Human-centred IoT systems for accessibility and reliability</option>
+                    <option value="Error prevention strategies in intelligent digital systems">Error prevention strategies in intelligent digital systems</option>
+                    <option value="Privacy, ethics, and trust in connected smart technologies">Privacy, ethics, and trust in connected smart technologies</option>
+                    <option value="Inclusive interfaces for diverse user groups">Inclusive interfaces for diverse user groups</option>
+                    <option value="Human interaction with AI-driven IoT devices">Human interaction with AI-driven IoT devices</option>
+                    <option value="Fault-tolerant interfaces for IoT and smart environments">Fault-tolerant interfaces for IoT and smart environments</option>
+                    <option value="Reliability engineering in networked user systems">Reliability engineering in networked user systems</option>
+                    <option value="Adaptive interfaces for error prevention in smart technologies">Adaptive interfaces for error prevention in smart technologies</option>
+                    <option value="Human-centred monitoring systems for connected devices">Human-centred monitoring systems for connected devices</option>
+                    <option value="The availability and reliability of cloud-based applications">The availability and reliability of cloud-based applications</option>
+                    <option value="Other">Other (Specify below)</option>
+                </select>
                 
-                <div class="form-group">
-                    <label for="topic">1. Topic</label>
-                    <span class="help-text">Select one of the suggested research areas or choose "Other" to define your own.</span>
-                    <select id="topic" required onchange="checkCustomTopic()">
-                        <option value="" disabled selected>Select a theme...</option>
-                        <option value="Human-centred IoT systems for accessibility and reliability">Human-centred IoT systems for accessibility and reliability</option>
-                        <option value="Error prevention strategies in intelligent digital systems">Error prevention strategies in intelligent digital systems</option>
-                        <option value="Privacy, ethics, and trust in connected smart technologies">Privacy, ethics, and trust in connected smart technologies</option>
-                        <option value="Inclusive interfaces for diverse user groups">Inclusive interfaces for diverse user groups</option>
-                        <option value="Human interaction with AI-driven IoT devices">Human interaction with AI-driven IoT devices</option>
-                        <option value="Fault-tolerant interfaces for IoT and smart environments">Fault-tolerant interfaces for IoT and smart environments</option>
-                        <option value="Reliability engineering in networked user systems">Reliability engineering in networked user systems</option>
-                        <option value="Adaptive interfaces for error prevention in smart technologies">Adaptive interfaces for error prevention in smart technologies</option>
-                        <option value="Human-centred monitoring systems for connected devices">Human-centred monitoring systems for connected devices</option>
-                        <option value="The availability and reliability of cloud-based applications">The availability and reliability of cloud-based applications</option>
-                        <option value="Other">Other (Specify below)</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="custom-topic-group" style="display: none;">
+                <div id="custom-topic-group" style="display: none;">
                     <label for="customTopic">Custom Topic</label>
-                    <input type="text" id="customTopic" placeholder="Enter your specific research topic">
+                    <input type="text" id="customTopic" placeholder="Type your specific topic...">
                 </div>
-
-                <div class="form-group">
-                    <label for="aim">2. Aim</label>
-                    <span class="help-text">State the overall overarching purpose of your research project in one or two sentences.</span>
-                    <textarea id="aim" required placeholder="The aim of this research is to..."></textarea>
+                
+                <div class="btn-group">
+                    <div></div> <!-- Spacer -->
+                    <button class="btn-next" onclick="nextStep(1)">Next Step ➔</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="objectives">3. Objectives</label>
-                    <span class="help-text">List 3 to 4 specific, measurable actions you will take to achieve your aim.</span>
-                    <textarea id="objectives" required placeholder="- To evaluate...&#10;- To design...&#10;- To test..."></textarea>
+            <!-- Step 2: Aim -->
+            <div class="step" id="step2">
+                <h2><span class="step-number">2</span> Project Aim</h2>
+                <label for="aim">What is the ultimate goal?</label>
+                <textarea id="aim" placeholder="The aim of this research is to explore/develop/evaluate..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(2)">🡨 Back</button>
+                    <button class="btn-next" onclick="nextStep(2)">Next Step ➔</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="researchQuestions">4. Research Questions</label>
-                    <span class="help-text">Formulate 1 to 3 key questions your project will attempt to answer.</span>
-                    <textarea id="researchQuestions" required placeholder="1. How does...&#10;2. What is the impact of..."></textarea>
+            <!-- Step 3: Objectives -->
+            <div class="step" id="step3">
+                <h2><span class="step-number">3</span> Objectives</h2>
+                <label for="objectives">List 3 to 4 measurable actions:</label>
+                <textarea id="objectives" placeholder="- To analyse...&#10;- To design...&#10;- To implement..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(3)">🡨 Back</button>
+                    <button class="btn-next" onclick="nextStep(3)">Next Step ➔</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="methodology">5. Methodology</label>
-                    <span class="help-text">Outline how you will conduct your research (e.g., primary data collection, secondary literature review, prototyping, user testing).</span>
-                    <textarea id="methodology" required placeholder="This project will utilize a mixed-methods approach, combining secondary research of WCAG guidelines with primary usability testing..."></textarea>
+            <!-- Step 4: Questions -->
+            <div class="step" id="step4">
+                <h2><span class="step-number">4</span> Research Questions</h2>
+                <label for="questions">What questions will your project answer?</label>
+                <textarea id="questions" placeholder="1. How does [technology] impact [user group]?&#10;2. What are the limitations of..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(4)">🡨 Back</button>
+                    <button class="btn-next" onclick="nextStep(4)">Next Step ➔</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="resources">6. Resources and timeline</label>
-                    <span class="help-text">Detail the hardware, software, literature, or participants you need, along with a brief project schedule.</span>
-                    <textarea id="resources" required placeholder="Resources required include access to IEEE Xplore, usability testing software, and 10 volunteer participants. The timeline is as follows: Week 1-2 (Literature Review)..."></textarea>
+            <!-- Step 5: Methodology -->
+            <div class="step" id="step5">
+                <h2><span class="step-number">5</span> Methodology</h2>
+                <label for="methodology">How will you conduct the research?</label>
+                <textarea id="methodology" placeholder="I will use a mixed-methods approach consisting of..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(5)">🡨 Back</button>
+                    <button class="btn-next" onclick="nextStep(5)">Next Step ➔</button>
                 </div>
+            </div>
 
-                <button type="button" onclick="generateProposal()">Compile Proposal</button>
-            </form>
+            <!-- Step 6: Resources & Timeline -->
+            <div class="step" id="step6">
+                <h2><span class="step-number">6</span> Resources & Timeline</h2>
+                <label for="resources">What do you need and when?</label>
+                <textarea id="resources" placeholder="Resources: Visual Studio Code, IEEE databases, 5 participants.&#10;Timeline:&#10;- Week 1: Literature review..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(6)">🡨 Back</button>
+                    <button class="btn-submit" onclick="generateOutput()">Compile Proposal ➔</button>
+                </div>
+            </div>
+
+            <!-- Step 7: Output -->
+            <div class="step" id="step7">
+                <h2>🎉 Proposal Generated!</h2>
+                <p>Review your work below and copy it to your LMS submission portal before Tuesday, 8 September 2026.</p>
+                <div id="output-area"></div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="prevStep(7)">🡨 Edit Responses</button>
+                </div>
+            </div>
         </div>
 
-        <div id="output-container" class="form-section">
-            <h2>Your Compiled Proposal</h2>
-            <p>Review your work below. You can copy this text directly into your LMS submission text box.</p>
-            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-            <div id="generated-proposal"></div>
+        <!-- Dynamic Context Panel (Right Side) -->
+        <div class="panel info-panel">
+            
+            <div class="info-content active" id="info1">
+                <img src="https://media.giphy.com/media/l41lFw057lAJQMwg0/giphy.gif" alt="Brainstorming GIF">
+                <h3>Theme Focus</h3>
+                <p>The field involves responsive interfaces, adaptive systems, accessibility tools, and intelligent notifications.</p>
+                <ul>
+                    <li>Must relate to User Experience.</li>
+                    <li>Consider AI, Cloud, or IoT.</li>
+                    <li>Keep accessibility in mind!</li>
+                </ul>
+            </div>
+
+            <div class="info-content" id="info2">
+                <img src="https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif" alt="Target GIF">
+                <h3>Setting the Aim</h3>
+                <p>Your aim is your overarching destination. Keep it to one concise, powerful sentence.</p>
+                <p><em>Example:</em> "To design an accessible smart-home interface for elderly users to prevent critical errors."</p>
+            </div>
+
+            <div class="info-content" id="info3">
+                <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" alt="Checklist GIF">
+                <h3>SMART Objectives</h3>
+                <p>Objectives are the stepping stones to reach your Aim.</p>
+                <ul>
+                    <li><strong>S</strong>pecific</li>
+                    <li><strong>M</strong>easurable</li>
+                    <li><strong>A</strong>chievable</li>
+                    <li><strong>R</strong>elevant</li>
+                    <li><strong>T</strong>ime-bound</li>
+                </ul>
+            </div>
+
+            <div class="info-content" id="info4">
+                <img src="https://media.giphy.com/media/3o7buirYcmV5nSwIRW/giphy.gif" alt="Questions GIF">
+                <h3>Research Questions</h3>
+                <p>These should be open-ended (How, What, Why) rather than Yes/No questions. They must challenge existing assumptions.</p>
+            </div>
+
+            <div class="info-content" id="info5">
+                <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" alt="Working GIF">
+                <h3>Methodology</h3>
+                <p>How are you collecting data? Will you use primary research (surveys, interviews, prototyping) or secondary research (literature reviews, data set analysis)?</p>
+            </div>
+
+            <div class="info-content" id="info6">
+                <img src="https://media.giphy.com/media/LUIvcbR6yytz2/giphy.gif" alt="Clock GIF">
+                <h3>Time is Ticking</h3>
+                <p>Don't forget the final deadline: <strong>1 September 2026 to 8 September 2026</strong>. Break your project down week by week to prove it is feasible.</p>
+            </div>
+
+            <div class="info-content" id="info7">
+                <img src="https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif" alt="Success GIF">
+                <h3>Ready for Submission</h3>
+                <p>Your proposal is formatted exactly to the required Table of Contents standard. Check for any typos before submitting!</p>
+            </div>
+
         </div>
     </div>
-    
-    <footer>
-        <p>Developed for Higher National Computing Curriculum Delivery.</p>
-    </footer>
 
     <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+
         function checkCustomTopic() {
-            const topicSelect = document.getElementById('topic');
-            const customGroup = document.getElementById('custom-topic-group');
-            if (topicSelect.value === 'Other') {
-                customGroup.style.display = 'block';
+            const select = document.getElementById('topic');
+            const customInput = document.getElementById('custom-topic-group');
+            if (select.value === 'Other') {
+                customInput.style.display = 'block';
             } else {
-                customGroup.style.display = 'none';
+                customInput.style.display = 'none';
             }
         }
 
-        function generateProposal() {
-            // Get form values
-            const topicSelect = document.getElementById('topic').value;
-            const customTopic = document.getElementById('customTopic').value;
-            const finalTopic = topicSelect === 'Other' ? customTopic : topicSelect;
+        function updateUI(step) {
+            // Hide all steps and info panels
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.info-content').forEach(el => el.classList.remove('active'));
             
-            const aim = document.getElementById('aim').value;
-            const objectives = document.getElementById('objectives').value;
-            const questions = document.getElementById('researchQuestions').value;
-            const methodology = document.getElementById('methodology').value;
-            const resources = document.getElementById('resources').value;
+            // Show current step and info panel
+            document.getElementById(`step${step}`).classList.add('active');
+            document.getElementById(`info${step}`).classList.add('active');
+            
+            // Update progress bar
+            const progress = ((step - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
 
-            // Basic validation
-            if (!topicSelect || !aim || !objectives || !questions || !methodology || !resources) {
-                alert('Please fill out all fields before compiling your proposal.');
-                return;
+        function nextStep(step) {
+            // Validation
+            if (step === 1) {
+                const topic = document.getElementById('topic').value;
+                if (!topic) { alert("Please select a topic!"); return; }
+            } else if (step === 2 && !document.getElementById('aim').value) {
+                alert("Please enter an aim!"); return;
+            } else if (step === 3 && !document.getElementById('objectives').value) {
+                alert("Please enter your objectives!"); return;
+            } else if (step === 4 && !document.getElementById('questions').value) {
+                alert("Please enter research questions!"); return;
+            } else if (step === 5 && !document.getElementById('methodology').value) {
+                alert("Please enter a methodology!"); return;
             }
 
-            // Format output
-            const outputText = `Unit 16: Research Project Proposal\n==================================\n\n` +
-                `1. Topic\n--------\n${finalTopic}\n\n` +
-                `2. Aim\n------\n${aim}\n\n` +
-                `3. Objectives\n-------------\n${objectives}\n\n` +
-                `4. Research Questions\n---------------------\n${questions}\n\n` +
-                `5. Methodology\n--------------\n${methodology}\n\n` +
-                `6. Resources and timeline\n-------------------------\n${resources}`;
+            currentStep = step + 1;
+            updateUI(currentStep);
+        }
 
-            // Display output
-            const outputContainer = document.getElementById('output-container');
-            const displayArea = document.getElementById('generated-proposal');
+        function prevStep(step) {
+            currentStep = step - 1;
+            updateUI(currentStep);
+        }
+
+        function generateOutput() {
+            const topicBase = document.getElementById('topic').value;
+            const finalTopic = topicBase === 'Other' ? document.getElementById('customTopic').value : topicBase;
             
-            displayArea.textContent = outputText;
-            outputContainer.style.display = 'block';
-            
-            // Scroll to output
-            outputContainer.scrollIntoView({ behavior: 'smooth' });
+            if (!document.getElementById('resources').value) {
+                alert("Please enter your resources and timeline!"); return;
+            }
+
+            const data = {
+                topic: finalTopic,
+                aim: document.getElementById('aim').value,
+                objectives: document.getElementById('objectives').value,
+                questions: document.getElementById('questions').value,
+                methodology: document.getElementById('methodology').value,
+                resources: document.getElementById('resources').value
+            };
+
+            const output = `UNIT 16: RESEARCH PROJECT PROPOSAL
+==================================
+
+1. Topic
+--------
+${data.topic}
+
+2. Aim
+------
+${data.aim}
+
+3. Objectives
+-------------
+${data.objectives}
+
+4. Research Questions
+---------------------
+${data.questions}
+
+5. Methodology
+--------------
+${data.methodology}
+
+6. Resources and timeline
+-------------------------
+${data.resources}`;
+
+            document.getElementById('output-area').textContent = output;
+            nextStep(6); // Move to final step
         }
 
         function copyToClipboard() {
-            const textToCopy = document.getElementById('generated-proposal').textContent;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('Proposal copied to clipboard! You can now paste it into the submission box.');
-            }).catch(err => {
-                alert('Failed to copy text. Please select the text and copy manually.');
+            const text = document.getElementById('output-area').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = "✅ Copied Successfully!";
+                btn.style.background = "#059669";
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = "var(--secondary)";
+                }, 3000);
             });
         }
     </script>
